@@ -10,6 +10,6 @@
 - Ranger
 - Castero
 # Footage:
-![footage\(https://github.com/janpstrunn/config-files/blob/main/footage.png)
+![footage](https://github.com/janpstrunn/config-files/blob/main/footage.png)
 ## Credits:- DT (Derek Taylor) - Qtile Dotfiles
 - pzerone - Neo Vim Kickstart
