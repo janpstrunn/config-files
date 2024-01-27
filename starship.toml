@@ -1,0 +1,27 @@
+[username]
+style_user = "99 bold"
+style_root = "red bold"
+format = "[$user]($style)"
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format = '@[$hostname](bold 51) '
+trim_at = "."
+disabled = false
+
+[character]
+success_symbol = "[❯](bold 154)"
+error_symbol = "[✗](bold 124)"
+
+[directory]
+truncation_length = 10
+truncate_to_repo = true 
+style = "bold italic 220"
+
+[cmd_duration]
+min_time = 4
+show_milliseconds = false
+disabled = false
+style = "bold italic 154"
