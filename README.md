@@ -7,7 +7,8 @@
 - Alacritty
 - Cava
 - Picom
-- Ranger 
+- Ranger
+- Castero
 # Footage:
 ![footage](https://raw.githubusercontent.com/janpstrunn/config-files/main/footage/footage.png)
 ## Credits:
