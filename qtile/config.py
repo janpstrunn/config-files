@@ -309,7 +309,7 @@ def init_widgets_list():
                  fontsize = 14
                  ),
         widget.WindowName(
-                 foreground = colors[6],
+                 foreground = colors[8],
                  max_chars = 40
                  ),
         widget.Spacer(length = 8),
@@ -339,7 +339,7 @@ def init_widgets_list():
                  foreground = colors[8],
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
                  format = '{MemUsed: .0f}{mm}',
-                 fmt = 'Mem: {} used',
+                 fmt = 'Mem: {}',
                  decorations=[
                      BorderDecoration(
                          colour = colors[8],
@@ -361,11 +361,11 @@ def init_widgets_list():
                  ),
         widget.Spacer(length = 8),
         widget.Clock(
-                 foreground = colors[8],
+                 foreground = colors[6],
                  format = "%a, %b %d - %H:%M",
                  decorations=[
                      BorderDecoration(
-                         colour = colors[8],
+                         colour = colors[6],
                          border_width = [0, 0, 2, 0],
                      )
                  ],
@@ -469,5 +469,5 @@ def autostart():
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
+#wmname = "LG3D"
 wmname = "Qtile"
-
