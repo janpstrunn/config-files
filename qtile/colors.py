@@ -2,16 +2,17 @@
 # Then, you can use RGBA color codes to add transparency to the colors below.
 # For ex: colors = [["#282c34ee", "#282c34dd"], ...
 
-DoomOne = [
+N1DH0GG = [
     ["#191724", "#191724"], # bg
-    ["#bbc2cf", "#bbc2cf"], # fg
+    ["#ffffff", "#ffffff"], # fg
     ["#1c1f24", "#1c1f24"], # color01
-    ["#ff6c6b", "#ff6c6b"], # color02
-    ["#98be65", "#98be65"], # color03
-    ["#da8548", "#da8548"], # color04
-    ["#f4da13", "#f4da13"], # color05
+    ["#02f789", "#02f789"], # color02
+    ["#f067fc", "#f067fc"], # color03
+    ["#7C5CFF", "#7C5CFF"], # color04
+    ["#f4f113", "#f4f113"], # color05
     ["#5e12ea", "#5e12ea"], # color06
-    ["#46d9ff", "#46d9ff"]  # color15
+    ["#46d9ff", "#46d9ff"], # color07
+    ["#fc0f99", "#fc0f99"], # color08
     ]
 
 Dracula  = [
