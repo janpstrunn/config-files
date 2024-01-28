@@ -11,6 +11,7 @@
 - Ranger
 - Neofetch
 - Castero
+- Starship
 ## Footages:
 ![footage](https://github.com/janpstrunn/config-files/blob/main/footage.png)
 ![eDEX](https://github.com/janpstrunn/config-files/blob/main/eDEX.png)
