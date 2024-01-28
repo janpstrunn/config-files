@@ -1,5 +1,5 @@
 [username]
-style_user = "99 bold"
+style_user = "51 bold"
 style_root = "red bold"
 format = "[$user]($style)"
 disabled = false
@@ -7,12 +7,12 @@ show_always = true
 
 [hostname]
 ssh_only = false
-format = '@[$hostname](bold 51) '
+format = '[@$hostname](bold 51) '
 trim_at = "."
 disabled = false
 
 [character]
-success_symbol = "[❯](bold 154)"
+success_symbol = "[❯.](bold 154)"
 error_symbol = "[✗](bold 124)"
 
 [directory]
@@ -22,6 +22,7 @@ style = "bold italic 220"
 
 [cmd_duration]
 min_time = 4
+format = "[$duration]($style)"
 show_milliseconds = false
 disabled = false
-style = "bold italic 154"
+style = "bold italic 99"
