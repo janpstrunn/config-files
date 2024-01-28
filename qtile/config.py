@@ -194,7 +194,7 @@ for i in groups:
 # colors = colors.SolarizedLight
 # colors = colors.TomorrowNight
 
-colors = colors.DoomOne
+colors = colors.N1DH0GG
 
 layout_theme = {"border_width": 2,
                 "margin": 8,
