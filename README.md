@@ -1,17 +1,18 @@
 # Personal Configuration Files
 ## Includes:
-- Qtile
-- Nvim
-- Bash
-- eDEX
-- Tmux
 - Alacritty
+- Bash
 - Cava
-- Picom
-- Ranger
-- Neofetch
 - Castero
+- cmus
+- eDEX
+- Neofetch
+- Nvim
+- Picom
+- Qtile
+- Ranger
 - Starship
+- Tmux
 ## Footages:
 ![footage](https://github.com/janpstrunn/config-files/blob/main/footage.png)
 ![eDEX](https://github.com/janpstrunn/config-files/blob/main/eDEX.png)
