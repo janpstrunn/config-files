@@ -11,6 +11,7 @@
 - Picom
 - Qtile
 - Ranger
+- SimpleX Theme
 - Starship
 - Tmux
 ## Footages:
