@@ -37,9 +37,9 @@ import colors
 mod = "mod4"              # Prefix Key - Super
 myTerm = "alacritty"      # Terminal
 myKey = "autokey-gtk"     # Hotkeys Out-of-the-box
-SoftManager = "bauh"      # Bauh
-SiriKali = "sirikali"     # Vault Manager
-Pass = "keepassxc"        # KeepassXC
+softManager = "bauh"      # Bauh
+kpass = "keepassxc"       # KeepassXC
+thunderbird = "thunderbird" # Email
 myBrowser = "flatpak run io.gitlab.librewolf-community/" # LibreWolf
 myFile = "thunar"         # Thunar
 
@@ -64,11 +64,11 @@ def maximize_by_switching_layout(qtile):
 keys = [
     Key([mod], "Return", lazy.spawn(myTerm), desc="Terminal"),
     Key([mod, "shift"], "Return", lazy.spawn("dm-run"), desc='Run Launcher'),
-    Key([mod], "b", lazy.spawn(SoftManager), desc='Bauh'),
-    Key([mod], "F12", lazy.spawn(Pass), desc='KeepassXC'),
-    Key([mod, "shift"], "F12", lazy.spawn(SiriKali), desc='SiriKali'),
+    Key([mod], "b", lazy.spawn(softManager), desc='Bauh'),
+    Key([mod], "F12", lazy.spawn(kpass), desc='KeepassXC'),
     Key([mod, "shift"], "Tab", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
     Key([mod], "F1", lazy.spawn(myBrowser), desc='Web Browser'),
+    Key([mod, "shift"], "F1", lazy.spawn(thunderbird), desc='Email'),
     Key([mod], "l", lazy.spawn(myKey), desc='AutoKey'),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
@@ -120,12 +120,9 @@ keys = [
     Key([mod], "f", maximize_by_switching_layout(), lazy.window.toggle_fullscreen(), desc='toggle fullscreen'),
     Key([mod, "shift"], "m", minimize_all(), desc="Toggle hide/show all windows on current group"),
 
-    # Switch focus of monitors
-	
     Key([mod], "period", lazy.next_screen(), desc='Move focus to next monitor'),
     Key([mod], "comma", lazy.prev_screen(), desc='Move focus to prev monitor'),
     
-    # Dmenu scripts launched using the key chord SUPER+p followed by 'key'
     KeyChord([mod], "p", [
         Key([], "h", lazy.spawn("dm-hub"), desc='List all dmscripts'),
         Key([], "a", lazy.spawn("dm-sounds"), desc='Choose ambient sound'),
@@ -166,14 +163,12 @@ for i in range(len(group_names)):
 for i in groups:
     keys.extend(
         [
-            # mod1 + letter of group = switch to group
             Key(
                 [mod],
                 i.name,
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
-            # mod1 + shift + letter of group = move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
@@ -292,7 +287,6 @@ def init_widgets_list():
                  fontsize = 14
                  ),
         widget.CurrentLayoutIcon(
-                 # custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
                  foreground = colors[1],
                  padding = 0,
                  scale = 0.7
@@ -377,21 +371,16 @@ def init_widgets_list():
         ]
     return widgets_list
 
-# Monitor 1 will display ALL widgets in widgets_list. It is important that this
-# is the only monitor that displays all widgets because the systray widget will
-# crash if you try to run multiple instances of it.
 def init_widgets_screen1():
     widgets_screen1 = init_widgets_list()
     return widgets_screen1 
 
-# All other monitors' bars will display everything but widgets 22 (systray) and 23 (spacer).
 def init_widgets_screen2():
     widgets_screen2 = init_widgets_list()
     del widgets_screen2[22:24]
     return widgets_screen2
 
-# For adding transparency to your bar, add (background="#00000000") to the "Screen" line(s)
-# For ex: Screen(top=bar.Bar(widgets=init_widgets_screen2(), background="#00000000", size=24)),
+# Bar Transparency: Screen(top=bar.Bar(widgets=init_widgets_screen2(), background="#00000000", size=24)),
 
 def init_screens():
     return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=26)),
@@ -404,7 +393,6 @@ if __name__ in ["config", "__main__"]:
     widgets_screen1 = init_widgets_screen1()
     widgets_screen2 = init_widgets_screen2()
 
-# Drag floating layouts.
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
@@ -469,5 +457,4 @@ def autostart():
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-#wmname = "LG3D"
-wmname = "Qtile"
+wmname = "LG3D"
