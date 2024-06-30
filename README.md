@@ -5,7 +5,8 @@
 - Cava
 - Castero
 - cmus
-- eDEX
+- eDEX Theme
+- Logseq Theme
 - Neofetch
 - Nvim
 - Picom
