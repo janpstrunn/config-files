@@ -34,14 +34,16 @@ from qtile_extras.widget.decorations import BorderDecoration
 #from qtile_extras.widget import StatusNotifier
 import colors
 
-mod = "mod4"              # Prefix Key - Super
-myTerm = "alacritty"      # Terminal
-myKey = "autokey-gtk"     # Hotkeys Out-of-the-box
-softManager = "bauh"      # Bauh
-kpass = "keepassxc"       # KeepassXC
-thunderbird = "thunderbird" # Email
-myBrowser = "flatpak run io.gitlab.librewolf-community/" # LibreWolf
-myFile = "thunar"         # Thunar
+mod = "mod4"
+TerminalEmulator = "alacritty"
+autokey = "autokey-gtk"
+keepass = "keepassxc"
+flameshot = "flameshot gui"
+librewolf = "flatpak run io.gitlab.librewolf-community/"
+vivaldi = "vivaldi"
+obsidian = "obsidian"
+delta = "deltachat-desktop"
+explorer = "thunar"
 
 @lazy.layout.function
 def add_treetab_section(layout):
@@ -62,14 +64,16 @@ def maximize_by_switching_layout(qtile):
     elif current_layout_name == 'max':
         qtile.current_group.layout = 'monadtall'
 keys = [
-    Key([mod], "Return", lazy.spawn(myTerm), desc="Terminal"),
-    Key([mod, "shift"], "Return", lazy.spawn("dm-run"), desc='Run Launcher'),
-    Key([mod], "b", lazy.spawn(softManager), desc='Bauh'),
-    Key([mod], "F12", lazy.spawn(kpass), desc='KeepassXC'),
+    Key([mod], "Return", lazy.spawn(TerminalEmulator), desc="Terminal"),
+    Key([mod], "u", lazy.spawn("dm-run"), desc='Run Launcher'),
+    Key([mod], "g", lazy.spawn(flameshot), desc='Flameshot'),
+    Key([mod], "F12", lazy.spawn(keepass), desc='KeepassXC'),
+    Key([mod], "F2", lazy.spawn(delta), desc='DeltaChat'),
+    Key([mod], "e", lazy.spawn(explorer), desc='Thunar'),
+    Key([mod], "F3", lazy.spawn(obsidian), desc='Obsidian'),
     Key([mod, "shift"], "Tab", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
-    Key([mod], "F1", lazy.spawn(myBrowser), desc='Web Browser'),
-    Key([mod, "shift"], "F1", lazy.spawn(thunderbird), desc='Email'),
-    Key([mod], "l", lazy.spawn(myKey), desc='AutoKey'),
+    Key([mod], "F1", lazy.spawn(vivaldi), desc='Vivaldi'),
+    Key([mod], "l", lazy.spawn(autokey), desc='AutoKey'),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),
@@ -123,22 +127,9 @@ keys = [
     Key([mod], "period", lazy.next_screen(), desc='Move focus to next monitor'),
     Key([mod], "comma", lazy.prev_screen(), desc='Move focus to prev monitor'),
     
+    # KeyChord Cheatsheat
     KeyChord([mod], "p", [
-        Key([], "h", lazy.spawn("dm-hub"), desc='List all dmscripts'),
-        Key([], "a", lazy.spawn("dm-sounds"), desc='Choose ambient sound'),
-        Key([], "b", lazy.spawn("dm-setbg"), desc='Set background'),
-        Key([], "c", lazy.spawn("dtos-colorscheme"), desc='Choose color scheme'),
-        Key([], "e", lazy.spawn("dm-confedit"), desc='Choose a config file to edit'),
-        Key([], "i", lazy.spawn("dm-maim"), desc='Take a screenshot'),
-        Key([], "k", lazy.spawn("dm-kill"), desc='Kill processes '),
-        Key([], "m", lazy.spawn("dm-man"), desc='View manpages'),
-        Key([], "n", lazy.spawn("dm-note"), desc='Store and copy notes'),
-        Key([], "o", lazy.spawn("dm-bookman"), desc='Browser bookmarks'),
-        Key([], "p", lazy.spawn("passmenu -p \"Pass: \""), desc='Logout menu'),
-        Key([], "q", lazy.spawn("dm-logout"), desc='Logout menu'),
-        Key([], "r", lazy.spawn("dm-radio"), desc='Listen to online radio'),
-        Key([], "s", lazy.spawn("dm-websearch"), desc='Search various engines'),
-        Key([], "t", lazy.spawn("dm-translate"), desc='Translate text')
+        Key([], "v", lazy.spawn("veracrypt"), desc='VeraCrypt'),
     ])
 
 ]
@@ -163,12 +154,14 @@ for i in range(len(group_names)):
 for i in groups:
     keys.extend(
         [
+            # mod1 + letter of group = switch to group
             Key(
                 [mod],
                 i.name,
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
+            # mod1 + shift + letter of group = move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
@@ -177,7 +170,6 @@ for i in groups:
             ),
         ]
     )
-
 
 # colors = colors.Dracula
 # colors = colors.GruvboxDark
@@ -189,7 +181,7 @@ for i in groups:
 # colors = colors.SolarizedLight
 # colors = colors.TomorrowNight
 
-colors = colors.N1DH0GG
+colors = colors.ShinyCrystal
 
 layout_theme = {"border_width": 2,
                 "margin": 8,
@@ -287,6 +279,7 @@ def init_widgets_list():
                  fontsize = 14
                  ),
         widget.CurrentLayoutIcon(
+                 # custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
                  foreground = colors[1],
                  padding = 0,
                  scale = 0.7
@@ -380,8 +373,6 @@ def init_widgets_screen2():
     del widgets_screen2[22:24]
     return widgets_screen2
 
-# Bar Transparency: Screen(top=bar.Bar(widgets=init_widgets_screen2(), background="#00000000", size=24)),
-
 def init_screens():
     return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=26)),
             Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=26)),
@@ -437,11 +428,8 @@ auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
 
-# If things like steam games want to auto-minimize themselves when losing
-# focus, should we respect this or not?
 auto_minimize = True
 
-# When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
 
 @hook.subscribe.startup_once
@@ -457,4 +445,4 @@ def autostart():
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "LG3D"
+wmname = "Qtile"
