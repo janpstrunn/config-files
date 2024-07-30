@@ -9,7 +9,6 @@
 - eDEX Theme
 - Neofetch
 - Nvim
-- Obsidian Snippets, plugins and theme configs
 - Picom
 - Qtile
 - Ranger
@@ -21,4 +20,3 @@
 ## Credits:
 - DT (Derek Taylor) - Qtile Dotfiles
 - pzerone - Neo Vim Kickstart
-- Kepano - Obsidian Minimal Theme

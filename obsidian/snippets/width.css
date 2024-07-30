@@ -1,6 +1,0 @@
-;; Increases the page width. Not required if the option "Readable line length" is turned off
-body {
-
---file-line-width: 1100px;
-
-}
