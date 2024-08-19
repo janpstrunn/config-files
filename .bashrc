@@ -1,28 +1,17 @@
 # ~/.bashrc
 [[ $- != *i* ]] && return
 
+PS1="\e[38;5;51m[\u@\h \W]\$ \e[m "
+HISTTIMEFORMAT="%F %T "
+export PATH=$HOME/.local/bin:$PATH
+
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias nv='nvim'
 
-alias install='sudo pacman -S $1'
-alias remove='sudo pacman -Rns $1'
-alias update='sudo pacman -Syy'
-alias upgrade='sudo pacman -Syu'
-
-alias die='sudo shutdown now'
-
-alias nethunter='nmap -v -sn 192.168.0.1/24 | grep -v "host down"'
-
-alias weather='curl http://wttr.in'
-
-alias vol-up='pactl set-sink-volume @DEFAULT_SINK@ +10%'
-alias vol-down='pactl set-sink-volume @DEFAULT_SINK@ -10%'
-alias rsyncing='rsync -av --delete'
-
 set -o vi
-PS1="\e[38;5;51m[\u@\h \W]\$ \e[m "
-HISTTIMEFORMAT="%F %T "
+
+source $HOME/.commands.sh
+
 eval "$(starship init bash)"
-export PATH=$HOME/.local/bin:$PATH
 eval "$(zoxide init bash)"
