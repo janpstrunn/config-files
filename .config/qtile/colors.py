@@ -1,5 +1,5 @@
 ShinyCrystal = [
-    ["#191724", "#191724"], # bg
+    ["#000000", "#000000"], # bg
     ["#ffffff", "#ffffff"], # fg
     ["#1c1f24", "#1c1f24"], # color01
     ["#02f789", "#02f789"], # color02
@@ -117,3 +117,5 @@ TomorrowNight = [
     ["#b294bb", "#b294bb"], # color06
     ["#70c0ba", "#70c0ba"]  # color15
     ]
+
+# Rose Pine #191724

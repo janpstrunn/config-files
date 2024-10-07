@@ -26,3 +26,7 @@ format = "[$duration]($style)"
 show_milliseconds = false
 disabled = false
 style = "bold italic 99"
+
+[[battery.display]]
+threshold = 100
+style = 'bold red'

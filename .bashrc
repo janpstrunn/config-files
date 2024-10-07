@@ -11,7 +11,8 @@ alias nv='nvim'
 
 set -o vi
 
-source $HOME/.commands.sh
+# External Shell Script (not included)
+# source $HOME/.commands.sh
 
 eval "$(starship init bash)"
 eval "$(zoxide init bash)"

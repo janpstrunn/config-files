@@ -34,16 +34,32 @@ from qtile_extras.widget.decorations import BorderDecoration
 #from qtile_extras.widget import StatusNotifier
 import colors
 
+# Master Key
+
 mod = "mod4"
-TerminalEmulator = "alacritty"
-autokey = "autokey-gtk"
-keepass = "keepassxc"
-flameshot = "flameshot gui"
+
+# Browsers
+
+zen = "flatpak run io.github.zen_browser.zen/"
+brave = "flatpak run com.brave.Browser"
 librewolf = "flatpak run io.gitlab.librewolf-community/"
 vivaldi = "vivaldi"
+qutebrowser = "qutebrowser"
+
+# Qutebrowser
+
+perplexity = "qutebrowser www.perplexity.ai/"
+chatgpt = "qutebrowser https://chatgpt.com/?iss=https%3A%2F%2Fauth0.openai.com%2F"
+
+# Others
+
+TerminalEmulator = "alacritty"
+autokey = "autokey-gtk"
+explorer = "thunar"
+keepass = "keepassxc"
+flameshot = "flameshot gui"
 obsidian = "obsidian"
 delta = "deltachat-desktop"
-explorer = "thunar"
 
 @lazy.layout.function
 def add_treetab_section(layout):
@@ -72,7 +88,7 @@ keys = [
     Key([mod], "e", lazy.spawn(explorer), desc='Thunar'),
     Key([mod], "F3", lazy.spawn(obsidian), desc='Obsidian'),
     Key([mod, "shift"], "Tab", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
-    Key([mod], "F1", lazy.spawn(vivaldi), desc='Vivaldi'),
+    Key([mod], "F1", lazy.spawn(librewolf), desc='Brave Browser'),
     Key([mod], "l", lazy.spawn(autokey), desc='AutoKey'),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
@@ -84,6 +100,10 @@ keys = [
     Key([mod], "down", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "up", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    # Qutebrowser
+    Key([mod, "control"], "F4", lazy.spawn(qutebrowser), desc='Qutebrowser'),
+    Key([mod, "control"], "F1", lazy.spawn(chatgpt), desc='ChatGPT'),
+    Key([mod, "control"], "F2", lazy.spawn(perplexity), desc='ChatGPT'),
     Key([mod, "shift"], "left",
         lazy.layout.shuffle_left(),
         lazy.layout.move_left().when(layout=["treetab"]),
@@ -129,7 +149,7 @@ keys = [
     
     # KeyChord Cheatsheat
     KeyChord([mod], "p", [
-        Key([], "v", lazy.spawn("veracrypt"), desc='VeraCrypt'),
+        Key([], "v", lazy.spawn("discord"), desc='Discord'),
     ])
 
 ]
@@ -154,14 +174,12 @@ for i in range(len(group_names)):
 for i in groups:
     keys.extend(
         [
-            # mod1 + letter of group = switch to group
             Key(
                 [mod],
                 i.name,
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
-            # mod1 + shift + letter of group = move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
@@ -184,7 +202,7 @@ for i in groups:
 colors = colors.ShinyCrystal
 
 layout_theme = {"border_width": 2,
-                "margin": 8,
+                "margin": 7,
                 "border_focus": colors[7],
                 "border_normal": colors[0]
                 }
@@ -244,11 +262,24 @@ extension_defaults = widget_defaults.copy()
 
 def init_widgets_list():
     widgets_list = [
-        widget.Image(
-                 filename = "~/.config/qtile/icons/logo.svg",
-                 scale = "False",
-                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)},
+        #widget.Image(
+                 #filename = "/home/janpstrunn/.config/qtile/icons/logo.svg",
+                 #scale = "False",
+                 #mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)},
+                 #),
+        widget.Pomodoro(
+                 font = "Ubuntu Mono",
+                 padding = 2,
+                 fontsize = 14
+                ),
+        widget.TextBox(
+                 text = '|',
+                 font = "Ubuntu Mono",
+                 foreground = colors[1],
+                 padding = 2,
+                 fontsize = 14
                  ),
+
         widget.Prompt(
                  font = "Ubuntu Mono",
                  fontsize=14,
@@ -271,13 +302,6 @@ def init_widgets_list():
                  other_current_screen_border = colors[7],
                  other_screen_border = colors[4],
                  ),
-        widget.TextBox(
-                 text = '|',
-                 font = "Ubuntu Mono",
-                 foreground = colors[1],
-                 padding = 2,
-                 fontsize = 14
-                 ),
         widget.CurrentLayoutIcon(
                  # custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
                  foreground = colors[1],
@@ -288,6 +312,15 @@ def init_widgets_list():
                  foreground = colors[1],
                  padding = 5
                  ),
+        widget.WindowName(
+                 foreground = colors[8],
+                 max_chars = 80
+                 ),
+        widget.Spacer(length = 8),
+    	widget.Net(
+		 format = '{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
+		 foreground = colors[3],
+		 ),
         widget.TextBox(
                  text = '|',
                  font = "Ubuntu Mono",
@@ -295,72 +328,66 @@ def init_widgets_list():
                  padding = 2,
                  fontsize = 14
                  ),
-        widget.WindowName(
+        widget.Battery(
+                 format = '󰁹{percent: 2.0%}',
                  foreground = colors[8],
-                 max_chars = 40
+                ),
+        widget.TextBox(
+                 text = '|',
+                 font = "Ubuntu Mono",
+                 foreground = colors[1],
+                 padding = 2,
+                 fontsize = 14
                  ),
-        widget.Spacer(length = 8),
-	widget.Net(
-		 format = '{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
-		 foreground = colors[3],
-		 decorations=[
-		     BorderDecoration(
-			 colour = colors[3],
-			 border_width = [0, 0, 2, 0],
-		     )
-		 ],
-		 ),
-	widget.Spacer(length = 8),
         widget.CPU(
-                 format = 'CPU: {load_percent}%',
+                 format = '  {load_percent}%',
                  foreground = colors[4],
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[4],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
                  ),
-        widget.Spacer(length = 8),
+        widget.TextBox(
+                 text = '|',
+                 font = "Ubuntu Mono",
+                 foreground = colors[1],
+                 padding = 2,
+                 fontsize = 14
+                 ),
         widget.Memory(
                  foreground = colors[8],
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e htop')},
                  format = '{MemUsed: .0f}{mm}',
-                 fmt = 'Mem: {}',
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[8],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
+                 fmt = ' {}',
                  ),
-        widget.Spacer(length = 8),
+        widget.TextBox(
+                 text = '|',
+                 font = "Ubuntu Mono",
+                 foreground = colors[1],
+                 padding = 2,
+                 fontsize = 14
+                 ),
         widget.KeyboardLayout(
                  foreground = colors[5],
-                 fmt = 'Kbd: {}',
+                 fmt = '  {}',
 		 configured_keyboards = ['us', 'br'],
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[5],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
                  ),
-        widget.Spacer(length = 8),
+        widget.TextBox(
+                 text = '|',
+                 font = "Ubuntu Mono",
+                 foreground = colors[1],
+                 padding = 2,
+                 fontsize = 14
+                 ),
         widget.Clock(
                  foreground = colors[6],
                  format = "%a, %b %d - %H:%M",
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[6],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
                  ),
-        widget.Spacer(length = 8),
+        widget.TextBox(
+                 text = '|',
+                 font = "Ubuntu Mono",
+                 foreground = colors[1],
+                 padding = 2,
+                 fontsize = 14
+                 ),
         widget.Systray(padding = 3),
         widget.Spacer(length = 8),
-
         ]
     return widgets_list
 
@@ -399,7 +426,6 @@ floating_layout = layout.Floating(
     border_focus=colors[8],
     border_width=2,
     float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
         Match(wm_class="confirmreset"),   # gitk
         Match(wm_class="dialog"),         # dialog boxes
