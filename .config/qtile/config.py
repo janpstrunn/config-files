@@ -40,26 +40,19 @@ mod = "mod4"
 
 # Browsers
 
-zen = "flatpak run io.github.zen_browser.zen/"
-brave = "flatpak run com.brave.Browser"
 librewolf = "flatpak run io.gitlab.librewolf-community/"
-vivaldi = "vivaldi"
-qutebrowser = "qutebrowser"
-
-# Qutebrowser
-
-perplexity = "qutebrowser www.perplexity.ai/"
-chatgpt = "qutebrowser https://chatgpt.com/?iss=https%3A%2F%2Fauth0.openai.com%2F"
+zen = "flatpak run io.github.zen_browser.zen -P"
 
 # Others
 
 TerminalEmulator = "alacritty"
 autokey = "autokey-gtk"
 explorer = "thunar"
-keepass = "keepassxc"
+keepass = "flatpak run org.keepassxc.KeePassXC"
 flameshot = "flameshot gui"
 obsidian = "obsidian"
 delta = "deltachat-desktop"
+git_master = "alacritty -e python /home/janpstrunn/git-master.py"
 
 @lazy.layout.function
 def add_treetab_section(layout):
@@ -85,10 +78,11 @@ keys = [
     Key([mod], "g", lazy.spawn(flameshot), desc='Flameshot'),
     Key([mod], "F12", lazy.spawn(keepass), desc='KeepassXC'),
     Key([mod], "F2", lazy.spawn(delta), desc='DeltaChat'),
+    Key([mod], "F1", lazy.spawn(zen), desc='Firefox'),
     Key([mod], "e", lazy.spawn(explorer), desc='Thunar'),
     Key([mod], "F3", lazy.spawn(obsidian), desc='Obsidian'),
+    Key([mod], "F5", lazy.spawn(git_master), desc='Git Master'),
     Key([mod, "shift"], "Tab", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
-    Key([mod], "F1", lazy.spawn(librewolf), desc='Brave Browser'),
     Key([mod], "l", lazy.spawn(autokey), desc='AutoKey'),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
@@ -100,10 +94,6 @@ keys = [
     Key([mod], "down", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "up", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-    # Qutebrowser
-    Key([mod, "control"], "F4", lazy.spawn(qutebrowser), desc='Qutebrowser'),
-    Key([mod, "control"], "F1", lazy.spawn(chatgpt), desc='ChatGPT'),
-    Key([mod, "control"], "F2", lazy.spawn(perplexity), desc='ChatGPT'),
     Key([mod, "shift"], "left",
         lazy.layout.shuffle_left(),
         lazy.layout.move_left().when(layout=["treetab"]),
@@ -328,10 +318,10 @@ def init_widgets_list():
                  padding = 2,
                  fontsize = 14
                  ),
-        widget.Battery(
-                 format = '󰁹{percent: 2.0%}',
-                 foreground = colors[8],
-                ),
+        #widget.Battery(
+        #format = '󰁹{percent: 2.0%}',
+        #foreground = colors[8],
+        #),
         widget.TextBox(
                  text = '|',
                  font = "Ubuntu Mono",
